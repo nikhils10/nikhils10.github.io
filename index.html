@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<!--
+	Escape Velocity by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Movie Recommendations</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header" class="wrapper">
+
+					<!-- Logo -->
+						<div id="logo">
+							<h1><a href="index.html">Movie Recommendation System</a></h1>
+						</div>
+
+				</section>
+
+			<!-- Intro -->
+				<section id="intro" class="wrapper style1">
+					<div class="title">Let's Begin</div>
+					<div style="width: 800px; margin: auto;">
+						<form onkeydown="return event.key != 'Enter';">
+							<div><input type="text" id="moviename" name="movie" placeholder="Enter Movie Name" /></div>
+						</form>
+					</div>
+					<div class="container">
+						<ul class="actions">
+							<li><a id="button_get_rec" class="button style3 large">Get Recommendations</a></li>
+						</ul>
+					</div>
+				</section>
+
+			<!-- Main -->
+				<section id="main" class="wrapper style2" style="display: none;">
+					<div class="title">Here you go!</div>
+					<div class="container">
+					<!-- Features -->
+						<section id="features">
+							<div class="feature-list">
+								<div class="row">
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_0">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_1">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_2">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_3">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_4">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_5">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_6">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_7">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_8">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+									<div class="col-6 col-12-medium">
+										<section>
+											<h3 id="recommendation_9">Lorem ipsum dolor sit veroeros</h3>
+										</section>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<section id="footer">
+						<div id="copyright">
+							<ul>
+								<li>&copy; <a href="https://github.com/nikhils10">Nikhil Sharma</a></li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+				</section>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script>
+				var element = document.getElementById("button_get_rec");
+				element.addEventListener("click", myFunction);
+
+				function myFunction () {
+					fetch('final.json')
+					.then(data => {
+						return data.json();
+					})
+					.then(data => {
+						myfunc(data);
+					})				
+				}
+				function myfunc (data) {
+					var movie = document.getElementById("moviename").value;
+					var movie_name = movie.toLowerCase();
+					var recommendations;
+					var found = true;
+					for (var i in data) {
+						if(i == movie_name) {
+							recommendations = data[i];
+							found = false;
+							break;
+						}
+					}
+					if(found) {
+						alert("Movie not in database");
+						return 0;
+					}
+					var section_element = document.getElementById("main");
+					if(section_element.style.display == "none") {
+						section_element.style.display = "block";
+					}
+					
+					for (var i in recommendations) {
+						var element = document.getElementById("recommendation_" + i);
+						element.innerHTML = recommendations[i];
+					}
+
+					smoothScroll();
+				}
+
+				function smoothScroll(){
+					document.getElementById('button_get_rec').scrollIntoView({
+						behavior: 'smooth'
+					});
+				}
+			</script>
+	</body>
+</html>
